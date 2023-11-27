@@ -24,3 +24,8 @@ def ext_sel_polio(df, country_code):
     polio_cases = polio_data[['Year', 'Total (reported) polio cases']]
     return polio_cases
 
+
+def ext_sel_hiv(df, country_code):
+    hiv_data = df[df['Code'] == country_code]
+    hiv_cases = hiv_data[['Year', 'Current number of cases of hiv/aids per 100 people, in both sexes aged 15-49 years']]
+    return hiv_cases
