@@ -44,3 +44,36 @@ def plot_dt_draw(dt_dict, country_code, country, year_size):
     plt.grid(True)
     plt.legend()
     plt.show()
+
+
+def calculate_change_rate(data_dict):
+    change_rates = {}
+    previous_value = None
+    for year, value in data_dict.items():
+        if previous_value is not None:
+            if previous_value != 0:
+                change_rate = (value - previous_value) / previous_value
+            else:
+                change_rate = 0
+            change_rates[year] = change_rate
+        previous_value = value
+    return change_rates
+
+
+def calculate_covid_change_rate(covid_cases_series):
+    covid_cases_df = covid_cases_series.to_frame(name='New_cases')
+    covid_cases_df['Change Rate'] = covid_cases_df['New_cases'].pct_change()
+    return covid_cases_df['Change Rate'].to_dict()
+
+
+def plot_comparison(cr_years, change_rates, dt_years, dt_rates, year_size):
+    plt.figure(figsize=(10, 6))
+    plt.plot(cr_years, change_rates, label='Fertility Change', marker='o')
+    plt.plot(dt_years, dt_rates, label='Death Rate', marker='o')
+    plt.xticks(range(min(cr_years), max(cr_years) + 1, year_size))
+    plt.title("Comparison of Fertility Change Rates and Death Rate Change in the Syrian Arab Republic (2005-2021)")
+    plt.xlabel("Year")
+    plt.ylabel("Change Rate")
+    plt.grid(True)
+    plt.legend()
+    plt.show()
