@@ -32,13 +32,13 @@ def ext_sel_hiv(df, country_code):
     return hiv_cases
 
 
-def plot_dt_draw(dt_dict, country_label, year_size):
+def plot_dt_draw(dt_dict, country_code, country, year_size):
     years = list(map(int, dt_dict.keys()))
     rates = list(dt_dict.values())
     plt.figure(figsize=(10, 6))
-    plt.plot(years, rates, label=country_label, marker='o')
+    plt.plot(years, rates, label=country_code, marker='o')
     plt.xticks(range(min(years), max(years) + 1, year_size))
-    plt.title(f"Death Rate in {country_label} ({min(years)}-{max(years)})")
+    plt.title(f"Death Rate in {country} ({min(years)}-{max(years)})")
     plt.xlabel("Year")
     plt.ylabel("Death Rate")
     plt.grid(True)
