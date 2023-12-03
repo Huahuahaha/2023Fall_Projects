@@ -77,3 +77,27 @@ def plot_comparison(cr_years, change_rates, dt_years, dt_rates, year_size):
     plt.grid(True)
     plt.legend()
     plt.show()
+
+
+def plot_fertility_rates(data_dict, country_name, start_year, end_year, step=3):
+    years = list(map(int, data_dict.keys()))
+    rates = list(data_dict.values())
+    plt.figure(figsize=(10, 6))
+    plt.plot(years, rates, label=country_name, marker='o')
+    plt.xticks(range(start_year, end_year + 1, step))
+    plt.title(f"Fertility Rates in {country_name} ({start_year}-{end_year})")
+    plt.xlabel("Year")
+    plt.ylabel("Fertility Rate")
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+
+def plot_normalized_rates(fertility_rates, death_rates):
+    df = pd.DataFrame({'Fertility_Rates': fertility_rates, 'Death_Rates': death_rates})
+    df_normalized = (df - df.min()) / (df.max() - df.min())
+    df_normalized.plot()
+    plt.title('Normalized Fertility and Death Rates Over Years')
+    plt.xlabel('Year')
+    plt.ylabel('Normalized Rates')
+    plt.show()
