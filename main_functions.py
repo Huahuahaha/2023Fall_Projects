@@ -8,9 +8,6 @@ def ext_sel_da(df, country_code, start_year, end_year):
     rates = data.iloc[0][year_columns]
     rate_dict = {year: rate for year, rate in zip(year_columns, rates)}
     return rate_dict
-    # year_columns = usa_data_series.columns[4:-2]
-    # fertility_rates = usa_data_series.iloc[0][4:-2]
-    # fertility_rate_dict = {year: rate for year, rate in zip(year_columns, fertility_rates)}
 
 
 def ext_sel_covid(df, country_code):
@@ -60,23 +57,10 @@ def calculate_change_rate(data_dict):
     return change_rates
 
 
-def calculate_covid_change_rate(covid_cases_series):
-    covid_cases_df = covid_cases_series.to_frame(name='New_cases')
-    covid_cases_df['Change Rate'] = covid_cases_df['New_cases'].pct_change()
-    return covid_cases_df['Change Rate'].to_dict()
-
-
-def plot_comparison(cr_years, change_rates, dt_years, dt_rates, year_size):
-    plt.figure(figsize=(10, 6))
-    plt.plot(cr_years, change_rates, label='Fertility Change', marker='o')
-    plt.plot(dt_years, dt_rates, label='Death Rate', marker='o')
-    plt.xticks(range(min(cr_years), max(cr_years) + 1, year_size))
-    plt.title("Comparison of Fertility Change Rates and Death Rate Change in the Syrian Arab Republic (2005-2021)")
-    plt.xlabel("Year")
-    plt.ylabel("Change Rate")
-    plt.grid(True)
-    plt.legend()
-    plt.show()
+# def calculate_covid_change_rate(covid_cases_series):
+#     covid_cases_df = covid_cases_series.to_frame(name='New_cases')
+#     covid_cases_df['Change Rate'] = covid_cases_df['New_cases'].pct_change()
+#     return covid_cases_df['Change Rate'].to_dict()
 
 
 def plot_fertility_rates(data_dict, country_name, start_year, end_year, step=3):
