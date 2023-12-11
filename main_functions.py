@@ -3,6 +3,17 @@ from matplotlib import pyplot as plt
 
 
 def ext_sel_da(df, country_code, start_year, end_year):
+    """
+        Reads the dataset from the given path and then converts it to a dataframe, where it then drops the unwanted columns
+        and sets an index based on the user input. It will then transpose the data and return the converted dataframe.
+
+        param df: Dataframe
+        param country_code: Abbreviation of country name. For example, China is "CHN"
+        param start_year: First year of required information
+        param end_year: Last year of required information
+        return: A dictionary containing years and fertility information for the corresponding years
+
+        """
     data = df[df['Country Code'] == country_code]
     year_columns = [str(year) for year in range(start_year, end_year + 1)]
     rates = data.iloc[0][year_columns]
