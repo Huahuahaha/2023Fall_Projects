@@ -12,8 +12,7 @@ def ext_sel_da(df, country_code, start_year, end_year):
         param start_year: First year of required information
         param end_year: Last year of required information
         return: A dictionary containing years and fertility information for the corresponding years
-
-        """
+    """
     data = df[df['Country Code'] == country_code]
     year_columns = [str(year) for year in range(start_year, end_year + 1)]
     rates = data.iloc[0][year_columns]
