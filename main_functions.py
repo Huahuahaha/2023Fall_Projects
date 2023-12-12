@@ -4,14 +4,18 @@ from matplotlib import pyplot as plt
 
 def ext_sel_da(df, country_code, start_year, end_year):
     """
-        Reads the dataset from the given path and then converts it to a dataframe, where it then drops the unwanted columns
-        and sets an index based on the user input. It will then transpose the data and return the converted dataframe.
+        Select data from a fixed Dataframe based on the given country abbreviation and time period (from start_year
+        to end_year) and form a dictionary with these data and their corresponding years. Finally, the dictionary
+        is returned.
 
         param df: Dataframe
         param country_code: Abbreviation of country name. For example, China is "CHN"
         param start_year: First year of required information
         param end_year: Last year of required information
-        return: A dictionary containing years and fertility information for the corresponding years
+        return: A dictionary containing years and fertility rate data for the corresponding years
+        >>> fr_data = pd.read_csv('Data/Fertility rates.csv', skiprows=4)
+        >>> ext_sel_da(fr_data, 'CHN', 2018, 2021)
+        {'2018': 1.554, '2019': 1.496, '2020': 1.281, '2021': 1.164}
     """
     data = df[df['Country Code'] == country_code]
     year_columns = [str(year) for year in range(start_year, end_year + 1)]
@@ -21,6 +25,23 @@ def ext_sel_da(df, country_code, start_year, end_year):
 
 
 def ext_sel_covid(df, country_code):
+    """
+        Find the required data from the Dataframe that records COVID-19 related data based on the given country
+        abbreviation and form a dictionary with these data and their corresponding years. Finally, the dictionary
+        is returned.
+
+        param df: Dataframe
+        param country_code: Abbreviation of country name. For example, China is "CHN"
+        return: A dictionary containing years and COVID-19 inflection data for the corresponding years
+        >>> covid_data = pd.read_csv('Data/WHO-COVID-19-global-data.csv')
+        >>> ext_sel_covid(covid_data, 'CN')
+        Year
+        2020       96673
+        2021       35398
+        2022    84792971
+        2023    14394816
+        Name: New_cases, dtype: int64
+    """
     covid_data = df[df['Country_code'] == country_code].copy()
     covid_data['Year'] = pd.to_datetime(covid_data['Date_reported']).dt.year
     case_by_year = covid_data.groupby('Year')['New_cases'].sum()
@@ -28,12 +49,83 @@ def ext_sel_covid(df, country_code):
 
 
 def ext_sel_polio(df, country_code):
+    """
+            Find the required data from the Dataframe that records poliomyelitis related data based on the given country
+            abbreviation and form a dictionary with these data and their corresponding years. Finally, the dictionary
+            is returned.
+
+            param df: Dataframe
+            param country_code: Abbreviation of country name. For example, China is "CHN"
+            return: A dictionary containing years and poliomyelitis inflection data for the corresponding years
+            >>> polio_data = pd.read_csv('Data/the-number-of-reported-paralytic-polio-cases.csv')
+            >>> ext_sel_polio(polio_data, 'CHN')
+                  Year  Total (reported) polio cases
+            1426  1980                          7442
+            1427  1981                          9625
+            1428  1982                          7741
+            1429  1983                          3296
+            1430  1984                          1626
+            1431  1985                          1537
+            1432  1986                          1844
+            1433  1987                           969
+            1434  1988                           667
+            1435  1989                          4623
+            1436  1990                          5065
+            1437  1991                          1926
+            1438  1992                          1191
+            1439  1993                           653
+            1440  1994                           261
+            1441  1995                           165
+            1442  1996                             3
+            1443  1997                             0
+            1444  1998                             0
+            1445  1999                             1
+            1446  2000                             0
+            1447  2001                             0
+            1448  2002                             0
+            1449  2003                             0
+            1450  2004                             2
+            1451  2005                             0
+            1452  2006                             0
+            1453  2007                             0
+            1454  2008                             0
+            1455  2009                             0
+            1456  2010                             0
+            1457  2011                            21
+            1458  2012                             2
+            1459  2013                             0
+            1460  2014                             0
+            1461  2015                             0
+            1462  2016                             0
+            1463  2017                             0
+            1464  2018                             0
+            1465  2019                             1
+            1466  2020                             0
+            1467  2021                             0
+        """
     polio_data = df[df['Code'] == country_code]
     polio_cases = polio_data[['Year', 'Total (reported) polio cases']]
     return polio_cases
 
 
 def ext_sel_hiv(df, country_code):
+    """
+            Find the required data from the Dataframe that records COVID-19 related data based on the given country
+            abbreviation and form a dictionary with these data and their corresponding years. Finally, the dictionary
+            is returned.
+
+            param df: Dataframe
+            param country_code: Abbreviation of country name. For example, China is "CHN"
+            return: A dictionary containing years and COVID-19 inflection data for the corresponding years
+            >>> covid_data = pd.read_csv('Data/WHO-COVID-19-global-data.csv')
+            >>> ext_sel_covid(covid_data, 'CN')
+            Year
+            2020       96673
+            2021       35398
+            2022    84792971
+            2023    14394816
+            Name: New_cases, dtype: int64
+        """
     hiv_data = df[df['Code'] == country_code]
     hiv_cases = hiv_data[['Year', 'Current number of cases of hiv/aids per 100 people, in both sexes aged 15-49 years']]
     return hiv_cases
